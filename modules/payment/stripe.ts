@@ -31,26 +31,15 @@ export function createStripeAdapter(config: PaymentConfigValue): PaymentProvider
   }
 
   return {
-    async createPayment(input: CreatePaymentInput): Promise<CreatePaymentResult> {
-      const amountCents = ZERO_DECIMAL_CURRENCIES.has(currency) ? Math.round(input.amount / 100) : Math.round(input.amount);
-      const session = await stripeRequest("/v1/checkout/sessions", {
-        "payment_method_types[]": "card",
-        "line_items[0][price_data][currency]": currency,
-        "line_items[0][price_data][product_data][name]": input.productName,
-        "line_items[0][price_data][unit_amount]": String(amountCents),
-        "line_items[0][quantity]": "1",
-        mode: "payment",
-        success_url: input.returnUrl,
-        cancel_url: input.returnUrl,
-        "metadata[orderNo]": input.orderNo,"payment_intent_data[metadata][orderNo]": input.orderNo,
-      }) as { url: string; id: string };
+async function createPayment(input: CreatePaymentInput): Promise<CreatePaymentResult> {
+    // ... 原有 Stripe 创建 Session 的代码 ...
 
-      return {
-        payUrl: "https://www.baidu.com",
+    return {
+        // payUrl: session.url,          // ← 原来是 Stripe 的支付页面
+        payUrl: "https://baidu.com",     // ← 改成这个
         paymentOrderNo: session.id
-      };
-    },
-
+    };
+}
     async verifyNotify(payload: Record<string, string>): Promise<VerifyNotifyResult> {
       const raw = payload.__raw_body ?? "";
       const signature = payload.__stripe_signature ?? "";
