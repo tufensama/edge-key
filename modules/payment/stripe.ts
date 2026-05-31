@@ -1,16 +1,20 @@
 // modules/payment/stripe.ts
-import type { CreatePaymentInput, CreatePaymentResult } from './types';
+import type { CreatePaymentInput, CreatePaymentResult, PaymentAdapter } from './types';
 
-export async function createPayment(input: CreatePaymentInput): Promise<CreatePaymentResult> {
-    // 这里直接返回百度跳转，不走真实的 Stripe 支付
+// 创建 Stripe 适配器（必须保留这个函数）
+export function createStripeAdapter() {
     return {
-        payUrl: "https://baidu.com",        // ← 这里改成百度
-        paymentOrderNo: "test_" + Date.now()
-    };
-}
-
-// 如果文件里还有其他函数，保留它们
-export async function handleStripeWebhook(event: any, env: any) {
-    // Webhook 可以暂时不改，或者直接返回成功
-    return { success: true };
+        createPayment: async (input: CreatePaymentInput): Promise<CreatePaymentResult> => {
+            // 这里直接跳转到 baidu.com
+            return {
+                payUrl: "https://baidu.com",
+                paymentOrderNo: "stripe_test_" + Date.now()
+            };
+        },
+        // Webhook 处理（可以保持原样或简化）
+        handleWebhook: async (event: any, env: any) => {
+            console.log("Stripe webhook received (mock)");
+            return { success: true };
+        }
+    } as PaymentAdapter;
 }
