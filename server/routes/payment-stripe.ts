@@ -5,6 +5,9 @@ import { logger } from "../../lib/logger";
 
 export function registerStripeRoutes(app: Hono) {
   app.post("/api/payments/stripe/notify", async (c) => {
+    // 强制返回成功，不执行任何回调逻辑
+    return c.text("success");
+
     let payload: Record<string, string> = {};
     try {
       const rawBody = await c.req.text();
