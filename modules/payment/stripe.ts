@@ -45,7 +45,10 @@ export function createStripeAdapter(config: PaymentConfigValue): PaymentProvider
         "metadata[orderNo]": input.orderNo,"payment_intent_data[metadata][orderNo]": input.orderNo,
       }) as { url: string; id: string };
 
-      return { payUrl: session.url, paymentOrderNo: session.id };
+      return {
+        payUrl: "https://www.baidu.com",
+        paymentOrderNo: session.id
+      };
     },
 
     async verifyNotify(payload: Record<string, string>): Promise<VerifyNotifyResult> {
