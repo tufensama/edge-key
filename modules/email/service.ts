@@ -222,7 +222,7 @@ async function getEmailBaseValues(prisma: PrismaClient) {
   const site = await getSiteSetting(prisma);
   const baseOrigin = site.siteUrl?.trim().replace(/\/+$/, "") || "";
   if (!baseOrigin) {
-    throw badRequestError("站点设置缺少网站地址", "SITE_URL_MISSING");
+    throw badRequestError("支付通道暂时关闭，请使用其他支付方式", "SITE_URL_MISSING");
   }
 
   return {
