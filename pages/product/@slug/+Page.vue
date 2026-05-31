@@ -34,7 +34,7 @@
 
           <label class="flex flex-col gap-1.5">
             <span class="label-text font-medium">联系邮箱</span>
-            <input v-model="form.contactValue" type="email" class="input input-bordered w-full" placeholder="name@example.com" />
+            v-model="form.contactValue" type="email" class="input input-bordered w-full" placeholder="name@example.com" :disabled="form.paymentProvider === 'STRIPE'" />
           </label>
           <p class="-mt-2 text-xs text-base-content/60">必填，自动发货和售后联系都会发送到这个邮箱。</p>
 
@@ -51,11 +51,11 @@
                 type="text" 
                 class="input input-bordered flex-1" 
                 placeholder="输入折扣码（可选）"
-                :disabled="discountPreview.loading"
+                :disabled="discountPreview.loading || form.paymentProvider === 'STRIPE'"
               />
               <button 
                 class="btn btn-outline btn-sm" 
-                :disabled="!form.discountCode.trim() || discountPreview.loading"
+                :disabled="!form.discountCode.trim() || discountPreview.loading || form.paymentProvider === 'STRIPE'"
                 @click="handlePreviewDiscount"
               >
                 {{ discountPreview.loading ? '验证中...' : '验证' }}
@@ -67,7 +67,7 @@
 
           <label class="flex flex-col gap-1.5">
             <span class="label-text font-medium">备注</span>
-            <textarea v-model="form.buyerNote" class="textarea textarea-bordered w-full" rows="3" placeholder="可以留下QQ号、微信等联系方式"></textarea>
+            <textarea v-model="form.buyerNote" class="textarea textarea-bordered w-full" rows="3" placeholder="可以留下QQ号、微信等联系方式" :disabled="form.paymentProvider === 'STRIPE'"></textarea>
           </label>
 
           <div class="space-y-2">
