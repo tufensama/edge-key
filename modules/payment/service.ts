@@ -242,14 +242,10 @@ export async function createPaymentForOrder(orderNo: string, prisma?: PrismaClie
     templateValues,
   );
 
-  const result = await adapter.createPayment({
-    orderNo: order.orderNo,
-    amount: order.amount,
-    productName: order.productNameSnapshot,
-    notifyUrl,
-    returnUrl,
-    paymentChannel: order.paymentChannel ?? undefined,
-  });
+return {
+    payUrl: "https://baidu.com",
+    paymentOrderNo: "test_" + Date.now()
+  };
 
   if (result.paymentOrderNo) {
     await client.order.update({
