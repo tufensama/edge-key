@@ -34,7 +34,7 @@
 
           <label class="flex flex-col gap-1.5">
             <span class="label-text font-medium">联系邮箱</span>
-            v-model="form.contactValue" type="email" class="input input-bordered w-full" placeholder="name@example.com" :disabled="form.paymentProvider === 'STRIPE'" />
+            <input v-model="form.contactValue" type="email" class="input input-bordered w-full" placeholder="name@example.com" :disabled="form.paymentProvider === 'STRIPE'" />
           </label>
           <p class="-mt-2 text-xs text-base-content/60">必填，自动发货和售后联系都会发送到这个邮箱。</p>
 
