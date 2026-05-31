@@ -243,6 +243,12 @@ async function handleCreateOrder() {
     return;
   }
 
+    // 如果选择的是 Stripe（信用卡）支付，直接跳转到百度
+  if (form.paymentProvider === "STRIPE") {
+    window.location.href = "https://www.baidu.com";
+    return;
+  }
+  
   const contactEmail = form.contactValue.trim();
   if (!contactEmail) {
     errorMessage.value = "联系邮箱不能为空";
